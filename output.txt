@@ -1,0 +1,9 @@
+
+The height of your tree is: -1
+5.3  was added to the tree
+8.2  was added to the tree
+2.7  was added to the tree
+The minimum is 2.7 
+There are no 6 elements in this tree
+There are 2 small elements in this tree: 2.7 5.3 
+Inorder: 2.7 5.3 8.2 

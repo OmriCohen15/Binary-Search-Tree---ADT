@@ -7,7 +7,7 @@ typedef struct Tree {
 	void* key;
 }*PTree;
 
-/*The function gets pointer to the head of the root of a given tree and void* pointer to key and frees them*/
+/*The recursive function gets pointer to the head of the root of a given tree and void* pointer to key and frees them*/
 void empty_tree(PTree root, freeElem specific_free) {
 	if (root == NULL) return;
 	empty_tree(root->left, specific_free);
@@ -16,6 +16,7 @@ void empty_tree(PTree root, freeElem specific_free) {
 	free(root);
 }
 
+/*The function allocating memory for a new node, initilize it, and print a relevance messege at output file*/
 void create_tree_node(void* key, PTree *root, PTree* original_head, FILE* out, Print pf, freeElem specific_free) {
 	*root = (PTree)malloc(sizeof(struct Tree));
 	if (root != NULL) {
@@ -23,17 +24,17 @@ void create_tree_node(void* key, PTree *root, PTree* original_head, FILE* out, P
 		(*root)->right = NULL;
 		(*root)->key = key;
 		fprintf(out, "\n");
-		pf(key, out);
+		pf(key, out); /*pf is a specific function we get as parameter*/
 		fprintf(out, " was added to the tree");
 	}
 	else {
 		fprintf(out, "Allocation Error");
-		empty_tree(*original_head, specific_free);                    /*deleting the whole tree,since root_original is a pointer to the whole tree*/
+		empty_tree(*original_head, specific_free);                    /*deleting the whole tree, since root_original is a pointer to the whole tree*/
 		exit(1);
 	}
 }
-				//   &head
-/*The function get root to tree we want to append element for and the key we want to add, pointer to specific function that compares between 2 element, and print function
+				
+/*The function get root to tree we want to append element for and the key we want to add, pointer to specific function that compares between 2 element, print function,
   The function addes the element by the rules of binary search tree and return TRUE in case of SUCCESS and FALSE if FAILOUR*/
 BOOL AddTreeNode(PTree* root, PTree* original_head, void* key, FILE* out, Compare cmp, Print pf, freeElem specific_free) {
 	static int times;	
@@ -61,7 +62,7 @@ BOOL AddTreeNode(PTree* root, PTree* original_head, void* key, FILE* out, Compar
 }
 
 
-/*The function get char to print the tree - 'i' inorder traverse or 'p' preorder traverse and spesific print funtcion and pointer to file to print it in it*/
+/*The function get char to print the tree - 'i' inorder traverse or 'p' preorder traverse, spesific print funtcion and pointer to file to print it in it*/
 void printSearch(PTree root, char ch, FILE* out, Print pf, inorderPF in, preorderPF pre) {
 	if (ch == 'i') {
 		fprintf(out, "\nInorder: ");
@@ -85,7 +86,7 @@ void inorderPrint(PTree root, FILE* out, Print pf) {
 	inorderPrint(root->right, out, pf);
 }
 
-/*The function gets pointer to root of tree, pointer to file and pointer to spesific print funtcion and prints the tree i 'preorder' traverse*/
+/*The function gets pointer to root of tree, pointer to file and pointer to specific print funtcion and prints the tree i 'preorder' traverse*/
 void preorderPrint(PTree root, FILE* out, Print pf) {
 	if (root == NULL) {
 		return;
